@@ -558,20 +558,15 @@ header {
 
 .mobile-slider {
     display: flex;
-    overflow-x: auto;
-    scroll-snap-type: x mandatory;
-    gap: 0.75rem;
-    padding: 0.5rem 0;
-    scrollbar-width: none; /* Firefox */
-}
-
-.mobile-slider::-webkit-scrollbar {
-    display: none; /* Chrome/Safari/Opera */
+    flex-direction: column; /* 세로 방향으로 정렬 */
+    gap: 1rem;
+    padding: 0.5rem 0 1.5rem;
+    overflow-y: auto; /* 세로 스크롤 활성화 */
+    scrollbar-width: thin;
 }
 
 .mobile-card {
-    flex: 0 0 95%; /* 화면 폭의 대부분을 차지하게 늘림 */
-    scroll-snap-align: center;
+    width: 100%; /* 가로 폭은 100% 가득 참 */
     background: transparent;
     border: none;
     backdrop-filter: none;
@@ -586,12 +581,12 @@ header {
 
 .mobile-card-img {
     width: 100%;
-    height: auto;
-    max-height: 80vh; /* 세로 화면 높이에 비례하게 조정 */
+    height: 28vh; /* 화면 세로 높이의 약 28%로 고정하여 한 화면에 대략 3개씩 게시됨 */
     object-fit: contain;
-    border-radius: 14px;
+    border-radius: 12px;
     background: rgba(0, 0, 0, 0.3);
-    line-height: 1.4;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
 }
 
 .mobile-card-story {
