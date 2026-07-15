@@ -1,0 +1,649 @@
+/* ==========================================
+   Design System & Premium CSS Stylesheet
+   침선비장 언년이의 솜씨를 녹여낸 프리미엄 CSS
+   ========================================== */
+
+/* 1. 디자인 토큰 및 변수 */
+:root {
+    --bg-dark: #070913;
+    --panel-bg: rgba(13, 17, 33, 0.45);
+    --panel-border: rgba(255, 255, 255, 0.06);
+    --glass-glow: rgba(255, 255, 255, 0.02);
+    --text-primary: #f8fafc;
+    --text-secondary: #94a3b8;
+    --text-muted: #64748b;
+    --accent: #38bdf8;
+    
+    /* 동적 테마를 위해 기본 네온 컬러 정의 (JS에서 실시간 오버라이딩함) */
+    --neon-color: #38bdf8;
+    --neon-glow: 0 0 15px rgba(56, 189, 248, 0.25), 0 0 30px rgba(56, 189, 248, 0.1);
+    
+    /* 원소 카테고리 컬러 */
+    --color-noble: #c084fc;       /* 비활성 기체 */
+    --color-nonmetal: #38bdf8;    /* 비금속/수소/탄소/기체 */
+    --color-metal: #fb923c;       /* 금속 일반 */
+    --color-heavy: #f43f5e;       /* 중금속/독성/우라늄 */
+    --color-active: #4ade80;      /* 촉매/반응성 */
+}
+
+/* 2. 전역 스타일 초기화 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: var(--bg-dark);
+    color: var(--text-primary);
+    font-family: 'Outfit', 'Noto Sans KR', sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+    position: relative;
+    line-height: 1.6;
+    letter-spacing: -0.02em;
+}
+
+/* 3. 오로라 배경 애니메이션 */
+.aurora-bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: -1;
+    overflow: hidden;
+    background: radial-gradient(circle at 50% 50%, #0d122b 0%, #050716 100%);
+}
+
+.blob {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(120px);
+    opacity: 0.2;
+    mix-blend-mode: screen;
+    animation: rotate-blobs 25s infinite alternate ease-in-out;
+}
+
+.blob-1 {
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(99, 102, 241, 0.8) 0%, rgba(0,0,0,0) 70%);
+    top: -10%;
+    left: -10%;
+}
+
+.blob-2 {
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(circle, rgba(14, 165, 233, 0.8) 0%, rgba(0,0,0,0) 70%);
+    bottom: -10%;
+    right: -10%;
+    animation-delay: -5s;
+    animation-duration: 30s;
+}
+
+.blob-3 {
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(circle, rgba(168, 85, 247, 0.6) 0%, rgba(0,0,0,0) 70%);
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    animation-delay: -10s;
+    animation-duration: 20s;
+}
+
+@keyframes rotate-blobs {
+    0% {
+        transform: translate(0, 0) scale(1) rotate(0deg);
+    }
+    50% {
+        transform: translate(80px, -50px) scale(1.1) rotate(180deg);
+    }
+    100% {
+        transform: translate(-40px, 60px) scale(0.9) rotate(360deg);
+    }
+}
+
+/* 4. 컨테이너 및 기본 그리드 배치 */
+.container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 2.5rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    z-index: 1;
+}
+
+header {
+    margin-bottom: 2.5rem;
+    text-align: center;
+}
+
+.logo-area {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 0.5rem;
+}
+
+.logo-sub {
+    font-size: 0.75rem;
+    font-weight: 800;
+    letter-spacing: 0.4em;
+    color: var(--accent);
+    text-transform: uppercase;
+}
+
+.logo-title {
+    font-family: 'Outfit', sans-serif;
+    font-size: 2.8rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, #ffffff 30%, #94a3b8 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    letter-spacing: -0.03em;
+    margin-top: 0.2rem;
+}
+
+.subtitle {
+    font-size: 0.95rem;
+    color: var(--text-secondary);
+    font-weight: 300;
+    max-width: 600px;
+    margin: 0.5rem auto 0;
+}
+
+/* 5. 레이아웃 분할 (좌측 20% 축소, 우측 그만큼 확대) */
+.main-content {
+    display: grid;
+    grid-template-columns: 0.96fr 1.04fr;
+    gap: 1.75rem;
+    flex-grow: 1;
+}
+
+
+/* 6. 글래스모피즘 패널 카드 공통 */
+.panel-card {
+    background: var(--panel-bg);
+    border: 1px solid var(--panel-border);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-radius: 18px;
+    padding: 1.5rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.4s ease, box-shadow 0.4s ease;
+}
+
+.panel-card:hover {
+    border-color: rgba(255, 255, 255, 0.1);
+}
+
+.panel-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 1.25rem;
+    border-left: 3px solid var(--accent);
+    padding-left: 0.6rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.title-desc {
+    font-size: 0.75rem;
+    font-weight: 400;
+    color: var(--text-muted);
+}
+
+/* 7. 주기율표 격자판 CSS Grid */
+.periodic-card {
+    margin-bottom: 1.5rem;
+}
+
+.periodic-table {
+    display: grid;
+    grid-template-columns: repeat(18, minmax(0, 1fr));
+    grid-template-rows: repeat(7, minmax(0, 1fr));
+    gap: 6px;
+    perspective: 800px;
+}
+
+/* 주기율표 개별 원소 타일 */
+.periodic-element {
+    background: rgba(30, 41, 59, 0.35);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 6px;
+    aspect-ratio: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    padding: 4px;
+    cursor: pointer;
+    position: relative;
+    user-select: none;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.periodic-element .num {
+    font-size: 0.6rem;
+    font-family: 'Outfit', sans-serif;
+    color: var(--text-muted);
+    align-self: flex-start;
+}
+
+.periodic-element .sym {
+    font-size: 1rem;
+    font-weight: 700;
+    font-family: 'Outfit', sans-serif;
+    color: var(--text-primary);
+    margin-bottom: 2px;
+}
+
+.periodic-element .name {
+    font-size: 0.55rem;
+    color: var(--text-secondary);
+}
+
+/* 활성화 및 카테고리별 테두리 글로우 효과 */
+.periodic-element:hover {
+    transform: scale(1.12) translateZ(10px);
+    background: rgba(30, 41, 59, 0.8);
+    z-index: 10;
+    border-color: var(--element-glow-color, var(--neon-color));
+    box-shadow: 0 0 15px var(--element-glow-color, rgba(56, 189, 248, 0.4));
+}
+
+.periodic-element.active {
+    background: rgba(30, 41, 59, 0.9);
+    border-color: var(--element-glow-color, var(--neon-color));
+    box-shadow: 0 0 20px var(--element-glow-color, rgba(56, 189, 248, 0.6));
+    animation: active-heartbeat 1.5s infinite alternate ease-in-out;
+}
+
+@keyframes active-heartbeat {
+    0% { transform: scale(1.05); }
+    100% { transform: scale(1.08); }
+}
+
+/* 8. 역사의 연대기 타임라인 */
+.timeline-container {
+    padding: 1rem 0.5rem;
+    position: relative;
+}
+
+.timeline-track {
+    width: 100%;
+    height: 4px;
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 2px;
+    position: relative;
+    margin: 1.5rem 0;
+}
+
+.timeline-node {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: rgba(30, 41, 59, 1);
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    position: absolute;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.timeline-node:hover {
+    background: var(--neon-color);
+    border-color: #fff;
+    box-shadow: 0 0 10px var(--neon-color);
+    transform: translate(-50%, -50%) scale(1.4);
+}
+
+.timeline-node.active {
+    background: var(--neon-color);
+    border-color: #fff;
+    box-shadow: 0 0 15px var(--neon-color);
+    transform: translate(-50%, -50%) scale(1.5);
+}
+
+.timeline-labels {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    font-family: 'Outfit', sans-serif;
+}
+
+/* 9. 3D 카드 플립 (돌림판 - 50% 이상 축소) */
+.card-3d-wrapper {
+    perspective: 1000px;
+    width: 100%;
+    height: 190px; /* 380px에서 190px로 50% 축소 */
+    margin-bottom: 1.5rem;
+    cursor: pointer;
+}
+
+.card-3d {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    transform-style: preserve-3d;
+    transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* 카드 플립 액션 클래스 */
+.card-3d-wrapper.flipped .card-3d {
+    transform: rotateY(180deg);
+}
+
+.card-face {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    border-radius: 16px;
+    padding: 1rem 1.5rem; /* 패딩 축소 */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border: 1px solid var(--panel-border);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+    transition: border-color 0.5s ease, box-shadow 0.5s ease;
+}
+
+/* 앞면 디자인 */
+.card-front {
+    background: linear-gradient(145deg, rgba(20, 27, 53, 0.75) 0%, rgba(8, 11, 26, 0.85) 100%);
+    border-color: rgba(var(--neon-color-rgb, 56, 189, 248), 0.15);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4), inset 0 0 30px rgba(var(--neon-color-rgb, 56, 189, 248), 0.03);
+}
+
+.card-3d-wrapper:hover .card-front {
+    border-color: rgba(var(--neon-color-rgb, 56, 189, 248), 0.4);
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.4), 0 0 20px rgba(var(--neon-color-rgb, 56, 189, 248), 0.12);
+}
+
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.element-number {
+    font-family: 'Outfit', sans-serif;
+    font-size: 1.3rem; /* 크기 축소 */
+    font-weight: 800;
+    color: var(--neon-color);
+    text-shadow: 0 0 8px rgba(var(--neon-color-rgb, 56, 189, 248), 0.3);
+}
+
+.element-category {
+    font-size: 0.65rem; /* 크기 축소 */
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    padding: 0.2rem 0.5rem;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 30px;
+    color: var(--text-secondary);
+}
+
+.card-body-main {
+    text-align: center;
+    margin: 0.2rem 0;
+    display: flex;
+    align-items: baseline;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.element-symbol {
+    font-family: 'Outfit', sans-serif;
+    font-size: 3.2rem; /* 6rem에서 3.2rem으로 축소 */
+    font-weight: 800;
+    color: #fff;
+    line-height: 1;
+    text-shadow: 0 0 15px rgba(var(--neon-color-rgb, 56, 189, 248), 0.2);
+}
+
+.element-name {
+    font-size: 1.2rem; /* 크기 축소 */
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.element-weight {
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.75rem;
+    color: var(--text-muted);
+}
+
+.card-meta {
+    display: flex;
+    flex-direction: row; /* 가로 배열로 레이아웃 압축 */
+    gap: 0.75rem;
+    background: rgba(255, 255, 255, 0.01);
+    border: 1px solid rgba(255, 255, 255, 0.03);
+    padding: 0.5rem 0.75rem;
+    border-radius: 10px;
+}
+
+.meta-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.1rem;
+    flex: 1;
+}
+
+.meta-label {
+    font-size: 0.6rem;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    font-weight: 600;
+    letter-spacing: 0.05em;
+}
+
+.meta-val {
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.highlight-text {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--neon-color);
+    text-shadow: 0 0 8px rgba(var(--neon-color-rgb, 56, 189, 248), 0.2);
+}
+
+.card-instruction {
+    font-size: 0.6rem;
+    color: var(--text-muted);
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-top: 0.2rem;
+}
+
+/* 뒷면 디자인 (돌림판 뒷면) */
+.card-back {
+    background: linear-gradient(145deg, rgba(10, 14, 30, 0.9) 0%, rgba(4, 5, 13, 0.95) 100%);
+    transform: rotateY(180deg);
+    border-color: rgba(var(--neon-color-rgb, 56, 189, 248), 0.15);
+    justify-content: flex-start;
+    gap: 0.5rem;
+}
+
+.story-title {
+    font-size: 1rem; /* 크기 축소 */
+    font-weight: 700;
+    color: #fff;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    padding-bottom: 0.3rem;
+}
+
+.story-period {
+    font-size: 0.7rem;
+    color: var(--neon-color);
+    font-weight: 600;
+    background: rgba(var(--neon-color-rgb, 56, 189, 248), 0.06);
+    border: 1px solid rgba(var(--neon-color-rgb, 56, 189, 248), 0.15);
+    padding: 0.15rem 0.4rem;
+    border-radius: 4px;
+    align-self: flex-start;
+    font-family: 'Outfit', sans-serif;
+}
+
+.story-content {
+    font-size: 0.82rem; /* 크기 축소 */
+    color: var(--text-secondary);
+    line-height: 1.5;
+    overflow-y: auto;
+    flex-grow: 1;
+    padding-right: 0.4rem;
+}
+
+/* 10. 이미지 뷰어 (원자 모형 대신 PDF 페이지 노출 - 크기 대폭 확대) */
+.visualizer-card {
+    height: 420px; /* 400px에서 420px로 5% 추가 확대 */
+    display: flex;
+    flex-direction: column;
+}
+
+
+.image-viewer {
+    flex-grow: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+    border-radius: 12px;
+    background: rgba(0, 0, 0, 0.25);
+    border: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.image-viewer img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    border-radius: 8px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+/* 11. 모바일 전용 가로 스크롤 슬라이더 (오직 비주얼 자료만 노출) */
+.mobile-container {
+    display: none;
+    flex-direction: column;
+    width: 100%;
+    margin-bottom: 1rem;
+    padding: 0 0.5rem;
+}
+
+.mobile-header {
+    display: none; /* 헤더 감추기 */
+}
+
+.mobile-slider {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    gap: 0.75rem;
+    padding: 0.5rem 0;
+    scrollbar-width: none; /* Firefox */
+}
+
+.mobile-slider::-webkit-scrollbar {
+    display: none; /* Chrome/Safari/Opera */
+}
+
+.mobile-card {
+    flex: 0 0 95%; /* 화면 폭의 대부분을 차지하게 늘림 */
+    scroll-snap-align: center;
+    background: transparent;
+    border: none;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    border-radius: 0;
+    padding: 0;
+    box-shadow: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.mobile-card-img {
+    width: 100%;
+    height: auto;
+    max-height: 80vh; /* 세로 화면 높이에 비례하게 조정 */
+    object-fit: contain;
+    border-radius: 14px;
+    background: rgba(0, 0, 0, 0.3);
+    line-height: 1.4;
+}
+
+.mobile-card-story {
+    font-size: 0.88rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    max-height: 150px;
+    overflow-y: auto;
+    padding-right: 0.4rem;
+}
+
+.mobile-card-story::-webkit-scrollbar {
+    width: 3px;
+}
+.mobile-card-story::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 2px;
+}
+
+/* 12. 하단 푸터 */
+footer {
+    margin-top: 3rem;
+    text-align: center;
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    border-top: 1px solid rgba(255, 255, 255, 0.04);
+    padding-top: 1.5rem;
+}
+
+footer i {
+    color: var(--text-secondary);
+}
+
+/* 13. 미디어 쿼리 (반응형 최적화) */
+@media (max-width: 1100px) {
+    .main-content {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .logo-title {
+        font-size: 2.2rem;
+    }
+    
+    .main-content {
+        display: none; /* 모바일 크기에서는 데스크톱 그리드뷰 감춤 */
+    }
+    
+    .mobile-container {
+        display: flex; /* 모바일 전용 슬라이드 리스트 노출 */
+    }
+}
+
