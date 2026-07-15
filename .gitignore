@@ -1,0 +1,19 @@
+# Environments (비밀값 및 가상환경 무시)
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+.env.*
+env/
+venv/
+.venv/
+
+# Python scripts (임시 다듬기용 파이썬 스크립트 무시)
+extract_pdf.py
+crop_images.py
+
+# System Files (운영체제 임시 파일 무시)
+.DS_Store
+Thumbs.db
+desktop.ini

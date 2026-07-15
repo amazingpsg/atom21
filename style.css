@@ -634,6 +634,10 @@ footer i {
 }
 
 @media (max-width: 768px) {
+    header {
+        display: none; /* 모바일에서는 헤더도 완전히 숨김 */
+    }
+
     .logo-title {
         font-size: 2.2rem;
     }
@@ -646,4 +650,3 @@ footer i {
         display: flex; /* 모바일 전용 슬라이드 리스트 노출 */
     }
 }
-
