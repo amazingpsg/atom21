@@ -494,7 +494,7 @@ function initMobileSlider() {
         card.className = 'mobile-card';
         
         card.innerHTML = `
-            <img class="mobile-card-img" src="images/page_${el.id}.png" alt="${el.name} 비주얼 자료">
+            <img class="mobile-card-img" src="images/page_${el.id}.webp" alt="${el.name} 비주얼 자료">
         `;
         mobileSlider.appendChild(card);
     });
@@ -551,7 +551,7 @@ function selectElement(el) {
     renderTimeline();
     
     // 5) 이미지 뷰어 갱신
-    elementImg.src = `images/page_${el.id}.png`;
+    elementImg.src = `images/page_${el.id}.webp`;
     document.getElementById('visualizerDesc').textContent = `${el.symbol}의 상세 화면`;
 }
 
@@ -582,7 +582,7 @@ document.addEventListener('DOMContentLoaded', () => {
     updateCard(activeElement);
     
     // 이미지 뷰어 초기화
-    elementImg.src = `images/page_${activeElement.id}.png`;
+    elementImg.src = `images/page_${activeElement.id}.webp`;
     document.getElementById('visualizerDesc').textContent = `${activeElement.symbol}의 상세 화면`;
     
     // 3D 카드 클릭 플립 이벤트 등록
